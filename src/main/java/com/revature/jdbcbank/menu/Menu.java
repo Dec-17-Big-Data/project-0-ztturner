@@ -3,6 +3,8 @@ package com.revature.jdbcbank.menu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.HashMap;
 import com.revature.jdbcbank.exceptions.DuplicateMenuInputException;
 
@@ -42,6 +44,51 @@ public class Menu {
 		
 		items.add(item);
 		requiredInputMap.put(requiredInput, items.size());
+	}
+	
+	public int selectMenuItem(String input) {
+		
+		int itemIndex = -1, matches = 0;
+		boolean inputNotInt = false;
+		// try to parse an integer from the input
+		try {
+			itemIndex = Integer.parseInt(input);
+		}
+		catch (NumberFormatException e) {
+			inputNotInt = true;
+		}
+		
+		// if the input could be parsed as an integer, make sure the integer is between 1 and the menu's size
+		if(!inputNotInt) {
+			if(itemIndex < 1 || itemIndex > items.size()) {
+				itemIndex = -1;
+			}
+		}
+		// else, check the menu's required input for the index
+		else {
+			String upperCaseInput = input.toUpperCase();
+			Pattern inputPattern = Pattern.compile("\b" + upperCaseInput);
+			
+			for(MenuItem item : items) {
+				Matcher inputMatcher = inputPattern.matcher(item.getRequiredInputString());		
+				
+				// if the input matches with a menu item
+				if(inputMatcher.find()) {
+					// if no matches have been made before, note the index and continue to make sure the input won't match multiple items
+					if(matches == 0) {
+						itemIndex = requiredInputMap.get(item.getRequiredInputString());
+						matches++;
+					}
+					// else, make the index the not found index and break out of the loop
+					else {
+						itemIndex = -1;
+						matches++;
+						break;
+					}
+				}
+			}
+		}		
+		return itemIndex;
 	}
 	
 	@Override

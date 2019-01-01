@@ -55,10 +55,13 @@ public class BankAccount implements Serializable {
 	public void setUser(int userId) {
 		this.userId = userId;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return name + " " + balance;
+		return "BankAccount [accountId=" + accountId + ", name=" + name + ", balance=" + balance + ", userId=" + userId
+				+ "]";
 	}
 
 	@Override
