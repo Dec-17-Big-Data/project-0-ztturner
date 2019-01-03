@@ -12,7 +12,7 @@ public class MenuItem {
 		super();
 		String tempDisplayString = displayString.toUpperCase();
 		String tempInputString = requiredInputString.toUpperCase();
-		Matcher inputStringMatcher = Pattern.compile("\b" + tempInputString + "\b").matcher(tempDisplayString);
+		Matcher inputStringMatcher = Pattern.compile(tempInputString).matcher(tempDisplayString);
 		if(!inputStringMatcher.find()) {
 			throw new InputDoesNotExistInDisplayException("Input string does not exist in the display string.");
 		}

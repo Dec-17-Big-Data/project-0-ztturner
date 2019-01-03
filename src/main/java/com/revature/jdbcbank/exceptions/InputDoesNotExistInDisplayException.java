@@ -1,6 +1,6 @@
 package com.revature.jdbcbank.exceptions;
 
-public class InputDoesNotExistInDisplayException extends Exception{
+public class InputDoesNotExistInDisplayException extends RuntimeException{
 
 	private static final long serialVersionUID = -6691178107548175475L;
 

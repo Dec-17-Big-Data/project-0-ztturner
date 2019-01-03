@@ -46,8 +46,7 @@ public class Menu {
 		requiredInputMap.put(requiredInput, items.size());
 	}
 	
-	public int selectMenuItem(String input) {
-		
+	public int selectMenuItem(String input) {		
 		int itemIndex = -1, matches = 0;
 		boolean inputNotInt = false;
 		// try to parse an integer from the input
@@ -67,16 +66,17 @@ public class Menu {
 		// else, check the menu's required input for the index
 		else {
 			String upperCaseInput = input.toUpperCase();
-			Pattern inputPattern = Pattern.compile("\b" + upperCaseInput);
+			Pattern inputPattern = Pattern.compile("\\b" + upperCaseInput);
 			
 			for(MenuItem item : items) {
-				Matcher inputMatcher = inputPattern.matcher(item.getRequiredInputString());		
+				String upperCaseRequiredInput = item.getRequiredInputString();
+				Matcher inputMatcher = inputPattern.matcher(upperCaseRequiredInput);		
 				
 				// if the input matches with a menu item
 				if(inputMatcher.find()) {
 					// if no matches have been made before, note the index and continue to make sure the input won't match multiple items
 					if(matches == 0) {
-						itemIndex = requiredInputMap.get(item.getRequiredInputString());
+						itemIndex = requiredInputMap.get(upperCaseRequiredInput);
 						matches++;
 					}
 					// else, make the index the not found index and break out of the loop

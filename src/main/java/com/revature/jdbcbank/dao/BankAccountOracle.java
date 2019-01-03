@@ -41,13 +41,13 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts;";
+			String sql = "select * from bank_accounts order by bank_account_id";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<BankAccount> accounts = new ArrayList<BankAccount>();
 			
 			while(rs.next()) {
-				accounts.add(new BankAccount(rs.getInt("bank_account_id"),rs.getString("name"),
+				accounts.add(new BankAccount(rs.getInt("bank_account_id"),rs.getString("account_name"),
 						rs.getDouble("balance"), rs.getInt("user_id")));
 			}
 			
@@ -71,14 +71,14 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where user_id = ?;";
+			String sql = "select * from bank_accounts where user_id = ? order by bank_account_id";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
 			List<BankAccount> userAccounts = new ArrayList<BankAccount>();
 			
 			while(rs.next()) {
-				userAccounts.add(new BankAccount(rs.getInt("bank_account_id"),rs.getString("name"),
+				userAccounts.add(new BankAccount(rs.getInt("bank_account_id"),rs.getString("account_name"),
 						rs.getDouble("balance"), rs.getInt("user_id")));
 			}
 			
@@ -102,21 +102,20 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where bank_account_id = ?;";
+			String sql = "select * from bank_accounts where bank_account_id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, bankAccountId);
 			ResultSet rs = ps.executeQuery();
 			BankAccount account = null;
 			
 			while(rs.next()) {
-				account = new BankAccount(rs.getInt("bank_account_id"),rs.getString("name"),
+				account = new BankAccount(rs.getInt("bank_account_id"),rs.getString("account_name"),
 						rs.getDouble("balance"), rs.getInt("user_id"));
 			}
 			
 			if(account == null) {
 				return logger.traceExit(Optional.empty());
 			}
-			
 			return logger.traceExit(Optional.of(account));
 		}
 		catch (SQLException e) {
@@ -137,7 +136,7 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where name = ? and user_id = ?;";
+			String sql = "select * from bank_accounts where account_name = ? and user_id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setInt(2, userId);
@@ -145,14 +144,13 @@ public class BankAccountOracle implements BankAccountDao {
 			BankAccount account = null;
 			
 			while(rs.next()) {
-				account = new BankAccount(rs.getInt("bank_account_id"), rs.getString("name"),
+				account = new BankAccount(rs.getInt("bank_account_id"), rs.getString("account_name"),
 						rs.getDouble("balance"), rs.getInt("user_id"));
 			}
 			
 			if(account == null) {
 				return logger.traceExit(Optional.empty());
 			}
-			
 			return logger.traceExit(Optional.of(account));
 		}
 		catch (SQLException e) {
@@ -175,7 +173,7 @@ public class BankAccountOracle implements BankAccountDao {
 		try {
 			int newAccountId = -1;
 			
-			CallableStatement cs = con.prepareCall("call createBankAccount(?, ?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call createBankAccount(?, ?, ?, ?)}");
 			cs.setString(1, name);
 			cs.setDouble(2, initialBalance);
 			cs.setInt(3, userId);
@@ -206,7 +204,7 @@ public class BankAccountOracle implements BankAccountDao {
 		try {
 			int success = -1;
 			
-			CallableStatement cs = con.prepareCall("call deleteBankAccount(?, ?);");
+			CallableStatement cs = con.prepareCall("{call deleteBankAccount(?, ?)}");
 			cs.setInt(1, bankAccountId);
 			cs.registerOutParameter(2, java.sql.Types.INTEGER);
 			cs.execute();
@@ -234,7 +232,7 @@ public class BankAccountOracle implements BankAccountDao {
 		try {
 			int success = -1;
 			
-			CallableStatement cs = con.prepareCall("call makeDeposit(?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call makeDeposit(?, ?, ?)}");
 			cs.setInt(1, bankAccountId);
 			cs.setDouble(2, amount);
 			cs.registerOutParameter(3, java.sql.Types.INTEGER);
@@ -263,7 +261,7 @@ public class BankAccountOracle implements BankAccountDao {
 		try {
 			int success = -1;
 			
-			CallableStatement cs = con.prepareCall("call makeWithdrawal(?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call makeWithdrawal(?, ?, ?)}");
 			cs.setInt(1, bankAccountId);
 			cs.setDouble(2, amount);
 			cs.registerOutParameter(3, java.sql.Types.INTEGER);

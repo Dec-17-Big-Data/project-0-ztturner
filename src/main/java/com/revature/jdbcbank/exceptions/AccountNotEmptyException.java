@@ -1,6 +1,6 @@
 package com.revature.jdbcbank.exceptions;
 
-public class AccountNotEmptyException extends Exception{
+public class AccountNotEmptyException extends RuntimeException{
 
 	private static final long serialVersionUID = 506627308507470379L;
 

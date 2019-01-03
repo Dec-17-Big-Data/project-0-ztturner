@@ -2,6 +2,8 @@ package com.revature.jdbcbank.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.revature.jdbcbank.dao.BankAccountDao;
 import com.revature.jdbcbank.dao.BankAccountOracle;
@@ -16,7 +18,7 @@ public class BankAccountService {
 		
 	}
 	
-	public BankAccountService getBankAccountService() {
+	public static BankAccountService getBankAccountService() {
 		if(bankAccountService == null) {
 			bankAccountService = new BankAccountService();
 		}
@@ -46,22 +48,21 @@ public class BankAccountService {
 			throw new ItemExistsException("Account with this name is associated with this user.");
 		}
 		
-		if(name.length() > 50) {
-			throw new IllegalArgumentException("Account name must be 50 characters or less.");
+		if(name.length() > 50 || name.length() == 0) {
+			throw new IllegalArgumentException("Account name must be between 1 and 50 characters in length.");
 		}
 		
-		String[] splitName = name.split("\\s+"); // check if the given name has no spaces		
-		if(splitName.length > 1) {
+		Matcher whitespaceMatcher = Pattern.compile("\\s").matcher(name); // check if the given name has no spaces		
+		if(whitespaceMatcher.find()) {
 			throw new IllegalArgumentException("Account name must not contain whitespace characters");
 		}
 		
 		if(initialBalance < 0) {
-			throw new IllegalArgumentException("Initial balance amount must be positive.");
+			throw new IllegalArgumentException("Initial balance amount must be non-negative.");
 		}
 		
-		if(initialBalance % 0.01 != 0) {
-			throw new IllegalArgumentException("Initial balance amount must be less precise than the thousandths place (ex: 2.25)");
-		}
+		initialBalance = Math.round(initialBalance * 100);
+		initialBalance = initialBalance / 100;
 		
 		return bankAccountDao.createBankAccount(name, initialBalance, userId);
 	}
@@ -81,19 +82,18 @@ public class BankAccountService {
 		return bankAccountDao.deleteBankAccount(bankAccountId);
 	}
 	
-	public int makeDeposit(int bankAccountId, double amount) throws ItemNotFoundException {
+	public int makeDeposit(int bankAccountId, double amount) throws ItemNotFoundException, IllegalArgumentException {
 		Optional<BankAccount> accountWrapper = getBankAccountById(bankAccountId);
 		if(!accountWrapper.isPresent()) {
 			throw new ItemNotFoundException("Account not found.");
 		}
 		
-		if(amount < 0) {
+		if(amount <= 0) {
 			throw new IllegalArgumentException("Deposit amount must be positive.");
 		}
 		
-		if(amount % 0.01 != 0) {
-			throw new IllegalArgumentException("Deposit amount must be less precise than the thousandths place (ex: 2.25)");
-		}
+		amount = Math.round(amount * 100);
+		amount = amount / 100;
 		
 		return bankAccountDao.makeDeposit(bankAccountId, amount);
 	}
@@ -110,9 +110,8 @@ public class BankAccountService {
 			throw new IllegalArgumentException("Withdrawal amount must be positive.");
 		}
 		
-		if(amount % 0.01 != 0) {
-			throw new IllegalArgumentException("Withdrawal amount must be less precise than the thousandths place (ex: 2.25)");
-		}
+		amount = Math.round(amount * 100);
+		amount = amount / 100;
 		
 		if(account.getBalance() < amount) {
 			throw new OverdraftException("Insufficent funds to withdraw the given amount.");

@@ -41,7 +41,7 @@ public class UserOracle implements UserDao{
 		}
 		
 		try {
-			String sql = "select * from bank_users;";
+			String sql = "select * from bank_users order by user_id";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			
@@ -69,7 +69,7 @@ public class UserOracle implements UserDao{
 		}
 		
 		try {
-			String sql = "select * from bank_users where user_id = ?;";
+			String sql = "select * from bank_users where user_id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
@@ -101,7 +101,7 @@ public class UserOracle implements UserDao{
 		}
 		
 		try {
-			String sql = "select * from bank_users where username = ?;";
+			String sql = "select * from bank_users where username = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, username);
 			ResultSet rs = ps.executeQuery();
@@ -138,7 +138,7 @@ public class UserOracle implements UserDao{
 		try {
 			int loginUserId = -1;
 			
-			CallableStatement cs = con.prepareCall("call createUser(?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call loginUser(?, ?, ?)}");
 			cs.setString(1, username);
 			cs.setString(2, password);
 			cs.registerOutParameter(3, java.sql.Types.INTEGER);
@@ -168,7 +168,7 @@ public class UserOracle implements UserDao{
 		try {
 			int newUserId = -1;
 			
-			CallableStatement cs = con.prepareCall("call createUser(?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call createUser(?, ?, ?)}");
 			cs.setString(1, username);
 			cs.setString(2, password);
 			cs.registerOutParameter(3, java.sql.Types.INTEGER);
@@ -198,7 +198,7 @@ public class UserOracle implements UserDao{
 		try {
 			int success = -1;
 			
-			CallableStatement cs = con.prepareCall("call deleteUser(?, ?);");
+			CallableStatement cs = con.prepareCall("{call deleteUser(?, ?)}");
 			cs.setInt(1, userId);
 			cs.registerOutParameter(2, java.sql.Types.INTEGER);
 			cs.execute();
@@ -227,7 +227,7 @@ public class UserOracle implements UserDao{
 		try {
 			int success = -1;
 			
-			CallableStatement cs = con.prepareCall("call updateUser(?, ?, ?);");
+			CallableStatement cs = con.prepareCall("{call updateUserPassword(?, ?, ?)}");
 			cs.setInt(1, userId);
 			cs.setString(2, password);
 			cs.registerOutParameter(3, java.sql.Types.INTEGER);

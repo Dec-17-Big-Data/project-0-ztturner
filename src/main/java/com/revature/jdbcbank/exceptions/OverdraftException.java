@@ -1,6 +1,6 @@
 package com.revature.jdbcbank.exceptions;
 
-public class OverdraftException extends Exception {
+public class OverdraftException extends RuntimeException {
 	
 	private static final long serialVersionUID = 9080984626109299120L;
 

@@ -2,6 +2,8 @@ package com.revature.jdbcbank.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.revature.jdbcbank.dao.UserDao;
 import com.revature.jdbcbank.dao.UserOracle;
@@ -36,8 +38,14 @@ public class UserService {
 		return userDao.getUserByUsername(username);
 	}
 	
-	public int loginUser(String username, String password) {
-		return userDao.loginUser(username, password);		
+	public int loginUser(String username, String password) throws InvalidCredentialsException {
+		int userId = userDao.loginUser(username, password);
+		
+		if(userId == 0) {
+			throw new InvalidCredentialsException("Invalid username or password");
+		}
+		
+		return userId;
 	}
 	
 	public int createUser(String username, String password) throws ItemExistsException, IllegalArgumentException {
@@ -46,14 +54,17 @@ public class UserService {
 			throw new ItemExistsException("A user with this username exists already.");
 		}
 		
-		if(username.length() > 50 || password.length() > 50) {
-			throw new IllegalArgumentException("Username and password must be 50 characters or less in length");
+		if(username.length() > 50 || username.length() == 0) {
+			throw new IllegalArgumentException("Username must be between 1 and 50 characters in length");
+		}
+		if(password.length() > 50 || password.length() < 8) {
+			throw new IllegalArgumentException("Password must be between 8 and 50 characters in length");
 		}
 		
-		String[] splitName = username.split("\\s+"); // check that the username has no spaces
-		String[] splitPass = password.split("\\s+"); // check that the password has no spaces
+		Matcher usernameMatcher = Pattern.compile("\\s").matcher(username);
+		Matcher passwordMatcher = Pattern.compile("\\s").matcher(password);
 		
-		if(splitName.length > 1 || splitPass.length > 1) {
+		if(usernameMatcher.find() || passwordMatcher.find()) {
 			throw new IllegalArgumentException("Username and password must not contain any whitespace");
 		}
 		
@@ -75,12 +86,13 @@ public class UserService {
 			throw new ItemNotFoundException("User not found.");
 		}
 		
-		if(password.length() > 50) {
-			throw new IllegalArgumentException("Password must be 50 characters or less in length");
+		if(password.length() > 50 || password.length() < 8) {
+			throw new IllegalArgumentException("Password must be between 8 and 50 characters in length");
 		}
-		String[] splitPass = password.split("\\s+");
 		
-		if(splitPass.length > 1) {
+		Matcher whitespaceMatcher = Pattern.compile("\\s").matcher(password);
+		
+		if(whitespaceMatcher.find()) {
 			throw new IllegalArgumentException("Password must not contain any whitespace");
 		}
 		

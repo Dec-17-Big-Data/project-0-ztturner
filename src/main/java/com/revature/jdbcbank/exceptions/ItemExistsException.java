@@ -1,6 +1,6 @@
 package com.revature.jdbcbank.exceptions;
 
-public class ItemExistsException extends Exception{
+public class ItemExistsException extends RuntimeException {
 
 	private static final long serialVersionUID = -1610115877063323512L;
 
