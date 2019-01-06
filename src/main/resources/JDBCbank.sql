@@ -124,9 +124,9 @@ create or replace procedure createBankAccount(new_account_name in varchar2, init
             insert into bank_accounts (bank_account_id, account_name, balance, user_id) 
             values (bank_account_id_sequence.nextval, new_account_name, initial_balance, account_user_id);
             new_account_id := bank_account_id_sequence.currval;
-            --insert a deposit for the initial amount
+            --insert a deposit transaction for the initial amount
             insert into bank_transactions (transaction_id, transaction_type, transaction_amount, bank_account_id)
-            values (transaction_id_sequence.nextval, 'Deposit', initial_balance, new_account_id);
+            values (transaction_id_sequence.nextval, 'Initial Deposit', initial_balance, new_account_id);
             commit;
         end if;
     end;

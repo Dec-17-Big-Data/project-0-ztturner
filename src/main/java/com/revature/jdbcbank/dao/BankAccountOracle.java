@@ -22,7 +22,7 @@ public class BankAccountOracle implements BankAccountDao {
 	private BankAccountOracle() {
 
 	}
-	
+
 	public static BankAccountOracle getBankAccountDao() {
 		if(bankAccountOracle == null) {
 			bankAccountOracle = new BankAccountOracle();
@@ -78,7 +78,7 @@ public class BankAccountOracle implements BankAccountDao {
 			List<BankAccount> userAccounts = new ArrayList<BankAccount>();
 			
 			while(rs.next()) {
-				userAccounts.add(new BankAccount(rs.getInt("bank_account_id"),rs.getString("account_name"),
+				userAccounts.add(new BankAccount(rs.getInt("bank_account_id"), rs.getString("account_name"),
 						rs.getDouble("balance"), rs.getInt("user_id")));
 			}
 			

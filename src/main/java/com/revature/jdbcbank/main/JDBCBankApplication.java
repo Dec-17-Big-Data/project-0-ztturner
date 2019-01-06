@@ -17,13 +17,19 @@ import com.revature.jdbcbank.exceptions.*;
 import com.revature.jdbcbank.menu.Menu;
 import com.revature.jdbcbank.menu.MenuItem;
 import com.revature.jdbcbank.models.BankAccount;
+import com.revature.jdbcbank.models.Transaction;
 import com.revature.jdbcbank.models.User;
 import com.revature.jdbcbank.services.BankAccountService;
+import com.revature.jdbcbank.services.TransactionService;
 import com.revature.jdbcbank.services.UserService;
 
 public class JDBCBankApplication {
 	private static final Logger logger = LogManager.getLogger(JDBCBankApplication.class);
 	
+	/**
+	 * Main method for the JDBCBank application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		logger.traceEntry("Starting application.");
 		Menu loginMenu = new Menu();
@@ -39,25 +45,31 @@ public class JDBCBankApplication {
 			loginMenu.addMenuItem(new MenuItem("Login as a user", "User"));
 			loginMenu.addMenuItem(new MenuItem("Login as a superuser", "Superuser"));
 			loginMenu.addMenuItem(new MenuItem("Exit the program", "Exit"));
-		} catch (DuplicateMenuInputException e) {
+		}
+		catch (DuplicateMenuInputException e) {
 			logger.catching(e);
 			logger.error("There is a duplicate required input in the menu", e);
 			kb.close();
 			return;
-		} catch (InputDoesNotExistInDisplayException e) {
+		}
+		catch (InputDoesNotExistInDisplayException e) {
 			logger.catching(e);
 			logger.error("The input does not exist in the menu item", e);
 			kb.close();
 			return;
 		}
 		
+		// user selects an option
+		System.out.println("Welcome to the JDBCBank Application");
 		while(loginMenuIndex != 4) {
 			System.out.println("");
 			System.out.println(loginMenu.toString());
 			System.out.println("Select an option.");
 			String input = kb.nextLine();
+			
 			String[] userInfo;
 			int userId;
+			
 			loginMenuIndex = loginMenu.selectMenuItem(input);
 			switch(loginMenuIndex) {
 			// register a new user
@@ -134,12 +146,18 @@ public class JDBCBankApplication {
 			}
 		}
 		
-		kb.close();
+		kb.close(); // close the Scanner before exiting the application
+		logger.traceExit();
 	}
 	
+	/**
+	 * Generates the logged in user menu and gives the user options to select from
+	 * @param currentUserId - the ID of the logged in user
+	 * @param kb - keyboard Scanner
+	 */
 	private static void loggedInUserMenu(int currentUserId, Scanner kb) {
 		// only logged in users are allowed
-		if(currentUserId == 0) {
+		if(currentUserId <= 0) {
 			return;
 		}
 		
@@ -148,26 +166,32 @@ public class JDBCBankApplication {
 		int menuIndex = 0;
 		
 		try {
-			userMenu.addMenuItem(new MenuItem("View bank accounts", "View"));
+			userMenu.addMenuItem(new MenuItem("View bank accounts", "Accounts"));
 			userMenu.addMenuItem(new MenuItem("Create new bank account", "Create"));
 			userMenu.addMenuItem(new MenuItem("Delete bank account", "Delete"));
 			userMenu.addMenuItem(new MenuItem("Deposit into bank account", "Deposit"));
 			userMenu.addMenuItem(new MenuItem("Withdraw from bank account", "Withdraw"));
 			userMenu.addMenuItem(new MenuItem("Change password", "Change"));
+			userMenu.addMenuItem(new MenuItem("View transactions", "Transactions"));
 			userMenu.addMenuItem(new MenuItem("Logout", "Logout"));
-		} catch (DuplicateMenuInputException e) {
+		}
+		catch (DuplicateMenuInputException e) {
 			logger.catching(e);
 			logger.error("There is a duplicate required input in the menu", e);
 			return;
-		} catch (InputDoesNotExistInDisplayException e) {
+		}
+		catch (InputDoesNotExistInDisplayException e) {
 			logger.catching(e);
 			logger.error("The input does not exist in the menu item", e);
 			return;
 		}
 		
-		double amount = 0;
+		// setup the services
 		BankAccountService bankAccountService = BankAccountService.getBankAccountService();
 		UserService userService = UserService.getUserService();
+		TransactionService transactionService = TransactionService.getTransactionService();
+
+		double amount = 0;
 		Optional<List<BankAccount>> accountsWrapper;
 		String input;
 		String[] accountInfo;
@@ -175,7 +199,9 @@ public class JDBCBankApplication {
 		String username = userService.getUserById(currentUserId).get().getUserName();
 		
 		System.out.println("Welcome, " + username);
-		while(menuIndex != 7) {
+		
+		// user selects an option
+		while(menuIndex != 8) {
 			System.out.println("");
 			System.out.println(userMenu.toString());
 			System.out.println("Select an option.");
@@ -188,17 +214,20 @@ public class JDBCBankApplication {
 				accountsWrapper = bankAccountService.getAllBankAccountsByUser(currentUserId);
 				if(accountsWrapper.isPresent()) {
 					List<BankAccount> accounts = accountsWrapper.get();
-					for(BankAccount item : accounts) {
-						System.out.println(item.toString());
-					}
 					if(accounts.size() == 0) {
 						System.out.println("No existing accounts.");
+					}
+					else {
+						for(BankAccount item : accounts) {
+							System.out.println(item.toString());
+						}
 					}
 				}
 				else {
 					System.out.println("Error while getting accounts.");
 				}
 				break;
+				
 			// create a new bank account
 			case 2:
 				try {
@@ -223,9 +252,11 @@ public class JDBCBankApplication {
 								System.out.println("Count not create an account.");
 							}
 						}
-					} catch (IllegalArgumentException e) {
+					}
+					catch (IllegalArgumentException e) {
 						System.out.println(e.getMessage());
-					} catch (ItemExistsException e) {
+					}
+					catch (ItemExistsException e) {
 						System.out.println(e.getMessage());
 					}
 				}
@@ -233,9 +264,11 @@ public class JDBCBankApplication {
 					System.out.println("The given input was not a valid number.");
 				}
 				break;
+				
 			// delete a bank account
 			case 3:
 				accountsWrapper = bankAccountService.getAllBankAccountsByUser(currentUserId);
+				
 				if(accountsWrapper.isPresent()) {
 					List<BankAccount> accounts = accountsWrapper.get();
 					
@@ -273,6 +306,7 @@ public class JDBCBankApplication {
 					System.out.println("Error while getting accounts");
 				}
 				break;
+				
 			// make a deposit to a bank account
 			case 4:
 				accountsWrapper = bankAccountService.getAllBankAccountsByUser(currentUserId);
@@ -317,6 +351,7 @@ public class JDBCBankApplication {
 					System.out.println("Error while getting accounts.");
 				}
 				break;
+				
 			// make a withdrawal from a bank account
 			case 5:
 				accountsWrapper = bankAccountService.getAllBankAccountsByUser(currentUserId);
@@ -366,6 +401,7 @@ public class JDBCBankApplication {
 					System.out.println("Error while getting accounts");
 				}
 				break;
+				
 			// change user's password
 			case 6:
 				System.out.println("Enter a password (must contain no whitespace, between 8 and 50 characters):");
@@ -383,14 +419,38 @@ public class JDBCBankApplication {
 					else {
 						System.out.println("Password successfully changed.");
 					}
-				} catch (IllegalArgumentException e) {
+				}
+				catch (IllegalArgumentException e) {
 					System.out.println(e.getMessage());
-				} catch (ItemNotFoundException e) {
+				}
+				catch (ItemNotFoundException e) {
 					System.out.println(e.getMessage());
 				}
 				break;
-			// logout
+				
+			// view user's transactions
 			case 7:
+				Optional<List<Transaction>> transactionsWrapper = transactionService.getAllTransactionsByUser(currentUserId);
+				
+				if(transactionsWrapper.isPresent()) {
+					List<Transaction> transactions = transactionsWrapper.get();
+					
+					if(transactions.size() == 0) {
+						System.out.println("No existing transactions.");
+					}
+					else {
+						for(Transaction item : transactions) {
+							System.out.println(item.toString());
+						}
+					}
+				}
+				else {
+					System.out.println("Error while getting the transactions. Please try again");
+				}
+				break;
+				
+			// logout
+			case 8:
 				System.out.println("Logging out.");
 				break;
 			// invalid selection
@@ -401,21 +461,28 @@ public class JDBCBankApplication {
 		}
 	}
 	
+	/**
+	 * Generates the superuser menu and gives the user options to select from
+	 * @param kb - keyboard Scanner
+	 */
 	private static void loggedInSuperUserMenu(Scanner kb) {
 		Menu superUserMenu = new Menu();
 		int menuIndex = 0;
 		
+		// Generate the superuser menu
 		try {
 			superUserMenu.addMenuItem(new MenuItem("View all users", "View"));
 			superUserMenu.addMenuItem(new MenuItem("Create a user", "Create"));
-			superUserMenu.addMenuItem(new MenuItem("Update a user", "Update"));
+			superUserMenu.addMenuItem(new MenuItem("Change a user's password", "Change"));
 			superUserMenu.addMenuItem(new MenuItem("Delete a user", "Delete"));
 			superUserMenu.addMenuItem(new MenuItem("Logout", "Logout"));
-		} catch (DuplicateMenuInputException e) {
+		}
+		catch (DuplicateMenuInputException e) {
 			logger.catching(e);
 			logger.error("There is a duplicate required input in the menu", e);
 			return;
-		} catch (InputDoesNotExistInDisplayException e) {
+		}
+		catch (InputDoesNotExistInDisplayException e) {
 			logger.catching(e);
 			logger.error("The input does not exist in the menu item", e);
 			return;
@@ -427,6 +494,7 @@ public class JDBCBankApplication {
 		String input;
 		String[] userInfo;
 		
+		// User selects an option
 		while(menuIndex != 5) {
 			System.out.println("");
 			System.out.println(superUserMenu.toString());
@@ -480,14 +548,13 @@ public class JDBCBankApplication {
 					System.out.println(e.getMessage());
 				}
 				break;
-			// update a user
+			// change a user's password
 			case 3:
-				break;
-			// delete a user
-			case 4:
 				usersWrapper = userService.getAllUsers();
+				
 				if(usersWrapper.isPresent()) {
 					users = usersWrapper.get();
+					
 					if(users.size() == 0) {
 						System.out.println("No existing users.");
 					}
@@ -495,6 +562,55 @@ public class JDBCBankApplication {
 						int userIndex = selectItem(users, "user", kb);
 						
 						if(userIndex == -1) {
+							System.out.println("Invalid input");
+						}
+						else {
+							System.out.println("Enter a password (must contain no whitespace, between 8 and 50 characters):");
+							input = kb.nextLine();
+							
+							try {
+								int success = userService.updateUserPassword(users.get(userIndex - 1).getUserId(), input);
+								
+								if(success == -1) {
+									System.out.println("Error occurred while changing password");
+								}
+								else if(success == 0) {
+									System.out.println("Input password was not long enough. Password must be between 8 and 50 characters long");
+								}
+								else {
+									System.out.println("Password successfully changed");
+								}
+							}
+							catch (IllegalArgumentException e) {
+								System.out.println(e.getMessage());
+							}
+							catch (ItemNotFoundException e) {
+								System.out.println(e.getMessage());
+							}
+						}
+					}
+				}
+				else {
+					System.out.println("Error while getting users. Please try again.");
+				}
+				break;
+			// delete a user
+			case 4:
+				usersWrapper = userService.getAllUsers();
+				
+				if(usersWrapper.isPresent()) {
+					users = usersWrapper.get();
+					
+					if(users.size() == 0) {
+						System.out.println("No existing users.");
+					}
+					else {
+						int userIndex = selectItem(users, "user", kb);
+						
+						if(userIndex == -1) {
+							System.out.println("Invalid input");
+						}
+						else {
 							try {
 								int success = userService.deleteUser(users.get(userIndex - 1).getUserId());
 								
@@ -514,12 +630,14 @@ public class JDBCBankApplication {
 					}
 				}
 				else {
-					System.out.println("No existing users.");
+					System.out.println("Error while getting users. Please try again.");
 				}
 				break;
+			// log out
 			case 5:
 				System.out.println("Logging out.");
 				break;
+			// invalid selection
 			default:
 				System.out.println("Invalid selection.");
 				break;
@@ -527,10 +645,15 @@ public class JDBCBankApplication {
 		}
 	}
 	
+	/**
+	 * Gets the user's username and password from the user
+	 * @param kb - keyboard Scanner
+	 * @return the input user info
+	 */
 	private static String[] getUserInfo(Scanner kb) {
 		String[] userInfo = new String[2];
 		
-		System.out.println("Enter a username (must contain no whitespace, non-empty, and less than 50 characters):");
+		System.out.println("Enter a username (must contain no whitespace, be non-empty, and less than 50 characters):");
 		userInfo[0] = kb.nextLine();
 		System.out.println("Enter a password (must contain no whitespace, between 8 and 50 characters):");
 		userInfo[1] = kb.nextLine();
@@ -538,12 +661,18 @@ public class JDBCBankApplication {
 		return userInfo;
 	}
 	
+	/**
+	 * Gets the account name and initial balance from the user
+	 * @param kb - keyboard Scanner
+	 * @return the input account info
+	 * @throws NumberFormatException - thrown if the initial balance input cannot be converted into a double
+	 */
 	private static String[] getAccountInfo(Scanner kb) throws NumberFormatException {
 		String[] accountInfo = new String[2];
 		
-		System.out.println("Enter the idenifier you would like to use for this account (must contain no whitespace, non-empty, and less than 50 characters)");
+		System.out.println("Enter the idenifier for this account (must contain no whitespace, be non-empty, and less than 50 characters)");
 		accountInfo[0] = kb.nextLine();
-		System.out.println("Enter the initial balance of this account");
+		System.out.println("Enter the initial balance for this account");
 		accountInfo[1] = kb.nextLine();
 		
 		// check if the initial balance can be converted to a double
@@ -551,6 +680,12 @@ public class JDBCBankApplication {
 		return accountInfo;
 	}
 	
+	/**
+	 * Gets the amount that the user wants to deposit or withdraw
+	 * @param kb - keyboard Scanner
+	 * @return the input converted to a double
+	 * @throws NumberFormatException - thrown if the user's input cannot be converted to a double
+	 */
 	private static double getAmount(Scanner kb) throws NumberFormatException {
 		String input;
 		double amount;
@@ -558,10 +693,18 @@ public class JDBCBankApplication {
 		System.out.println("Type in the amount to deposit/withdraw");
 		input = kb.nextLine();
 		
+		// check if the amount can be converted to a double
 		amount = Double.parseDouble(input);
 		return amount;
 	}
 	
+	/**
+	 * Takes a list of items and generates the display to select an item and return the item selected
+	 * @param items - the list of items to display
+	 * @param typeName - the type of the items
+	 * @param kb - keyboard Scanner
+	 * @return the selected item's index or -1 for invalid input
+	 */
 	private static <T> int selectItem(List<T> items, String typeName, Scanner kb) {
 		String input;
 		int selectedIndex = -1;
@@ -586,6 +729,13 @@ public class JDBCBankApplication {
 		return selectedIndex;
 	}
 	
+	/**
+	 * Attempts to log in as the superuser using the given input and comparing against the string in the properties file
+	 * @param loginUsername - the input login username
+	 * @param loginPassword - the input login password
+	 * @return - whether or not the login attempt was successful
+	 * @throws InvalidCredentialsException - if the login username or password was incorrect
+	 */
 	private static int loginSuperUser(String loginUsername, String loginPassword) throws InvalidCredentialsException {
 		InputStream in = null;
 		int success = -1;
