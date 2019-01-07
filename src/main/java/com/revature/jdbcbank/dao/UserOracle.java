@@ -25,6 +25,7 @@ public class UserOracle implements UserDao{
 	
 	public static UserOracle getUserDao() {
 		if(userOracle == null) {
+			logger.info("Creating new user dao");
 			userOracle = new UserOracle();
 		}
 		

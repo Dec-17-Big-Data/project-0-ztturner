@@ -37,7 +37,7 @@ public class BankAccountServiceTest {
 		double initialBalance = 5.55;
 		int userId = 1;
 		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
+		bankAccountService.createBankAccount(accountName, initialBalance, userId);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -46,7 +46,7 @@ public class BankAccountServiceTest {
 		double initialBalance = 5.55;
 		int userId = 1;
 		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
+		bankAccountService.createBankAccount(accountName, initialBalance, userId);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -55,7 +55,7 @@ public class BankAccountServiceTest {
 		double initialBalance = 5.55;
 		int userId = 1;
 		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
+		bankAccountService.createBankAccount(accountName, initialBalance, userId);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -64,7 +64,7 @@ public class BankAccountServiceTest {
 		double initialBalance = -1.00;
 		int userId = 1;
 		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
+		bankAccountService.createBankAccount(accountName, initialBalance, userId);
 	}
 	
 	@Test(expected=ItemExistsException.class)
@@ -73,21 +73,21 @@ public class BankAccountServiceTest {
 		double initialBalance = 5.55;
 		int userId = 1;
 		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
+		bankAccountService.createBankAccount(accountName, initialBalance, userId);
 	}
 	
 	@Test(expected=ItemNotFoundException.class)
 	public void testDeletingBankAccountNonExistentAccount() {
 		int accountId = 0;
 		
-		int deleteSuccess = bankAccountService.deleteBankAccount(accountId);
+		bankAccountService.deleteBankAccount(accountId);
 	}
 	
 	@Test(expected=AccountNotEmptyException.class)
 	public void testDeletingBankAccountAccountNotEmpty() {
 		int accountId = 1;
 		
-		int deleteSuccess = bankAccountService.deleteBankAccount(accountId);
+		bankAccountService.deleteBankAccount(accountId);
 	}
 	
 	@Test(expected=ItemNotFoundException.class)
@@ -95,7 +95,7 @@ public class BankAccountServiceTest {
 		int accountId = 0;
 		double amount = 5.55;
 		
-		int depositSuccess = bankAccountService.makeDeposit(accountId, amount);
+		bankAccountService.makeDeposit(accountId, amount);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -103,7 +103,7 @@ public class BankAccountServiceTest {
 		int accountId = 1;
 		double amount = -1.11;
 		
-		int depositSuccess = bankAccountService.makeDeposit(accountId, amount);
+		bankAccountService.makeDeposit(accountId, amount);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -111,7 +111,7 @@ public class BankAccountServiceTest {
 		int accountId = 1;
 		double amount = 0;
 		
-		int depositSuccess = bankAccountService.makeDeposit(accountId, amount);
+		bankAccountService.makeDeposit(accountId, amount);
 	}
 	
 	@Test(expected=ItemNotFoundException.class)
@@ -119,7 +119,7 @@ public class BankAccountServiceTest {
 		int accountId = 0;
 		double amount = 1.11;
 		
-		int withdrawalSuccess = bankAccountService.makeWithdrawal(accountId, amount);
+		bankAccountService.makeWithdrawal(accountId, amount);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -127,7 +127,7 @@ public class BankAccountServiceTest {
 		int accountId = 1;
 		double amount = -1.11;
 		
-		int withdrawalSuccess = bankAccountService.makeWithdrawal(accountId, amount);
+		bankAccountService.makeWithdrawal(accountId, amount);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -135,14 +135,14 @@ public class BankAccountServiceTest {
 		int accountId = 1;
 		double amount = 0;
 		
-		int withdrawalSuccess = bankAccountService.makeWithdrawal(accountId, amount);
+		bankAccountService.makeWithdrawal(accountId, amount);
 	}
 	
 	@Test(expected=OverdraftException.class)
 	public void testMakingWithdrawalOverdraft() {
 		int accountId = 1;
-		double amount = 1000000;
+		double amount = Double.MAX_VALUE;
 		
-		int withdrawalSuccess = bankAccountService.makeWithdrawal(accountId, amount);
+		bankAccountService.makeWithdrawal(accountId, amount);
 	}
 }

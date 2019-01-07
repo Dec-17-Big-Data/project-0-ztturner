@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.Scanner;
@@ -14,14 +13,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.jdbcbank.exceptions.*;
-import com.revature.jdbcbank.menu.Menu;
-import com.revature.jdbcbank.menu.MenuItem;
-import com.revature.jdbcbank.models.BankAccount;
-import com.revature.jdbcbank.models.Transaction;
-import com.revature.jdbcbank.models.User;
-import com.revature.jdbcbank.services.BankAccountService;
-import com.revature.jdbcbank.services.TransactionService;
-import com.revature.jdbcbank.services.UserService;
+import com.revature.jdbcbank.menu.*;
+import com.revature.jdbcbank.models.*;
+import com.revature.jdbcbank.services.*;
 
 public class JDBCBankApplication {
 	private static final Logger logger = LogManager.getLogger(JDBCBankApplication.class);
@@ -38,7 +32,8 @@ public class JDBCBankApplication {
 		Scanner kb = new Scanner(System.in);
 		
 		UserService userService = UserService.getUserService();
-
+		
+		logger.info("Generating main menu");
 		// create the main menu for the program
 		try {
 			loginMenu.addMenuItem(new MenuItem("Register as a user", "Register"));
@@ -89,9 +84,11 @@ public class JDBCBankApplication {
 					}
 				} 
 				catch (IllegalArgumentException a) {
+					logger.catching(a);
 					System.out.println(a.getMessage());
 				} 
 				catch (ItemExistsException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				}
 				
@@ -112,6 +109,7 @@ public class JDBCBankApplication {
 					}
 				}
 				catch (InvalidCredentialsException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				}
 				
@@ -125,13 +123,14 @@ public class JDBCBankApplication {
 					int success = loginSuperUser(userInfo[0], userInfo[1]);
 					
 					if(success == -1) {
-						System.out.println("Could not login as a superuser. Please try again.");
+						System.out.println("Error while trying to login as a superuser. Please try again.");
 					}
 					else {
 						loggedInSuperUserMenu(kb);
 					}
 				}
 				catch (InvalidCredentialsException e) {
+					logger.catching(e);
 					System.out.println("Invalid username or password.");
 				}
 				break;
@@ -158,6 +157,7 @@ public class JDBCBankApplication {
 	private static void loggedInUserMenu(int currentUserId, Scanner kb) {
 		// only logged in users are allowed
 		if(currentUserId <= 0) {
+			logger.info("Invalid user id. Exiting logged in user menu");
 			return;
 		}
 		
@@ -254,13 +254,16 @@ public class JDBCBankApplication {
 						}
 					}
 					catch (IllegalArgumentException e) {
+						logger.catching(e);
 						System.out.println(e.getMessage());
 					}
 					catch (ItemExistsException e) {
+						logger.catching(e);
 						System.out.println(e.getMessage());
 					}
 				}
 				catch (NumberFormatException f) {
+					logger.catching(f);
 					System.out.println("The given input was not a valid number.");
 				}
 				break;
@@ -294,10 +297,12 @@ public class JDBCBankApplication {
 								}
 							} 
 							catch (ItemNotFoundException e) {
+								logger.catching(e);
 								System.out.println("Account not found.");
 							} 
 							catch (AccountNotEmptyException e) {
-								System.out.println("Given account is not empty. Accounts must be emptied before being able to be deleted.");
+								logger.catching(e);
+								System.out.println("Chosen account is not empty. Accounts must be emptied before being able to be deleted.");
 							}
 						}
 					}
@@ -421,15 +426,18 @@ public class JDBCBankApplication {
 					}
 				}
 				catch (IllegalArgumentException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				}
 				catch (ItemNotFoundException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				}
 				break;
 				
 			// view user's transactions
 			case 7:
+				logger.info("Viewing the user's transactions");
 				Optional<List<Transaction>> transactionsWrapper = transactionService.getAllTransactionsByUser(currentUserId);
 				
 				if(transactionsWrapper.isPresent()) {
@@ -451,10 +459,12 @@ public class JDBCBankApplication {
 				
 			// logout
 			case 8:
+				logger.info("Logging out");
 				System.out.println("Logging out.");
 				break;
 			// invalid selection
 			default:
+				logger.info("Invalid menu selection");
 				System.out.println("Invalid menu selection.");
 				break;
 			}
@@ -466,6 +476,7 @@ public class JDBCBankApplication {
 	 * @param kb - keyboard Scanner
 	 */
 	private static void loggedInSuperUserMenu(Scanner kb) {
+		logger.traceEntry("Generating superuser menu");
 		Menu superUserMenu = new Menu();
 		int menuIndex = 0;
 		
@@ -543,8 +554,10 @@ public class JDBCBankApplication {
 						}
 					}
 				} catch (IllegalArgumentException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				} catch (ItemExistsException e) {
+					logger.catching(e);
 					System.out.println(e.getMessage());
 				}
 				break;
@@ -582,9 +595,11 @@ public class JDBCBankApplication {
 								}
 							}
 							catch (IllegalArgumentException e) {
+								logger.catching(e);
 								System.out.println(e.getMessage());
 							}
 							catch (ItemNotFoundException e) {
+								logger.catching(e);
 								System.out.println(e.getMessage());
 							}
 						}
@@ -624,6 +639,7 @@ public class JDBCBankApplication {
 									System.out.println("User successfully deleted.");
 								}
 							} catch (ItemNotFoundException e) {
+								logger.catching(e);
 								System.out.println("User not found.");
 							}
 						}
@@ -651,6 +667,7 @@ public class JDBCBankApplication {
 	 * @return the input user info
 	 */
 	private static String[] getUserInfo(Scanner kb) {
+		logger.traceEntry("Getting user Info");
 		String[] userInfo = new String[2];
 		
 		System.out.println("Enter a username (must contain no whitespace, be non-empty, and less than 50 characters):");
@@ -658,7 +675,7 @@ public class JDBCBankApplication {
 		System.out.println("Enter a password (must contain no whitespace, between 8 and 50 characters):");
 		userInfo[1] = kb.nextLine();
 		
-		return userInfo;
+		return logger.traceExit(userInfo);
 	}
 	
 	/**
@@ -668,6 +685,7 @@ public class JDBCBankApplication {
 	 * @throws NumberFormatException - thrown if the initial balance input cannot be converted into a double
 	 */
 	private static String[] getAccountInfo(Scanner kb) throws NumberFormatException {
+		logger.traceEntry("Getting account info");
 		String[] accountInfo = new String[2];
 		
 		System.out.println("Enter the idenifier for this account (must contain no whitespace, be non-empty, and less than 50 characters)");
@@ -677,7 +695,7 @@ public class JDBCBankApplication {
 		
 		// check if the initial balance can be converted to a double
 		Double.parseDouble(accountInfo[1]);
-		return accountInfo;
+		return logger.traceExit(accountInfo);
 	}
 	
 	/**
@@ -687,6 +705,7 @@ public class JDBCBankApplication {
 	 * @throws NumberFormatException - thrown if the user's input cannot be converted to a double
 	 */
 	private static double getAmount(Scanner kb) throws NumberFormatException {
+		logger.traceEntry("Getting amount value");
 		String input;
 		double amount;
 		
@@ -695,7 +714,7 @@ public class JDBCBankApplication {
 		
 		// check if the amount can be converted to a double
 		amount = Double.parseDouble(input);
-		return amount;
+		return logger.traceExit(amount);
 	}
 	
 	/**
@@ -706,6 +725,7 @@ public class JDBCBankApplication {
 	 * @return the selected item's index or -1 for invalid input
 	 */
 	private static <T> int selectItem(List<T> items, String typeName, Scanner kb) {
+		logger.traceEntry("Generating display from list of items.");
 		String input;
 		int selectedIndex = -1;
 		int index = 0;
@@ -726,7 +746,7 @@ public class JDBCBankApplication {
 		catch (NumberFormatException e) {			
 		}
 		
-		return selectedIndex;
+		return logger.traceExit(selectedIndex);
 	}
 	
 	/**
@@ -737,6 +757,7 @@ public class JDBCBankApplication {
 	 * @throws InvalidCredentialsException - if the login username or password was incorrect
 	 */
 	private static int loginSuperUser(String loginUsername, String loginPassword) throws InvalidCredentialsException {
+		logger.traceEntry("Attempting login to superuser");
 		InputStream in = null;
 		int success = -1;
 		
@@ -772,6 +793,6 @@ public class JDBCBankApplication {
 			}
 		}
 		
-		return success;
+		return logger.traceExit(success);
 	}
 }

@@ -25,6 +25,7 @@ public class TransactionOracle implements TransactionDao {
 	
 	public static TransactionOracle getTranscationDao() {
 		if(transactionOracle == null) {
+			logger.info("Creating new transaction dao");
 			transactionOracle = new TransactionOracle();
 		}
 		
@@ -41,8 +42,11 @@ public class TransactionOracle implements TransactionDao {
 		}
 		
 		try {
-			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, a.bank_account_id, a.account_name, a.balance, a.user_id " + 
-		                 "from bank_transactions t inner join bank_accounts a on t.bank_account_id = a.bank_account_id order by transaction_id";			
+			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, "
+					     + "a.bank_account_id, a.account_name, a.balance, a.user_id " 
+		                 + "from bank_transactions t "
+		                 + "inner join bank_accounts a on t.bank_account_id = a.bank_account_id "
+		                 + "order by transaction_id";			
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<Transaction> transactions = new ArrayList<Transaction>();
@@ -77,8 +81,11 @@ public class TransactionOracle implements TransactionDao {
 		}
 		
 		try {
-			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, a.bank_account_id, a.account_name, a.balance, a.user_id " + 
-		                 "from bank_transactions t inner join bank_accounts a on t.bank_account_id = a.bank_account_id where user_id = ? order by transaction_id";			
+			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, "
+					   + "a.bank_account_id, a.account_name, a.balance, a.user_id "
+		               + "from bank_transactions t "
+		               + "inner join bank_accounts a on t.bank_account_id = a.bank_account_id "
+		               + "where user_id = ? order by transaction_id";			
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();

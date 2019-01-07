@@ -25,6 +25,7 @@ public class BankAccountOracle implements BankAccountDao {
 
 	public static BankAccountOracle getBankAccountDao() {
 		if(bankAccountOracle == null) {
+			logger.info("Creating new bank account dao");
 			bankAccountOracle = new BankAccountOracle();
 		}
 		
@@ -71,7 +72,8 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where user_id = ? order by bank_account_id";
+			String sql = "select * from bank_accounts "
+					   + "where user_id = ? order by bank_account_id";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
@@ -102,7 +104,8 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where bank_account_id = ?";
+			String sql = "select * from bank_accounts "
+					   + "where bank_account_id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setInt(1, bankAccountId);
 			ResultSet rs = ps.executeQuery();
@@ -136,7 +139,8 @@ public class BankAccountOracle implements BankAccountDao {
 		}
 		
 		try {
-			String sql = "select * from bank_accounts where account_name = ? and user_id = ?";
+			String sql = "select * from bank_accounts "
+					   + "where account_name = ? and user_id = ?";
 			PreparedStatement ps = con.prepareStatement(sql);
 			ps.setString(1, name);
 			ps.setInt(2, userId);

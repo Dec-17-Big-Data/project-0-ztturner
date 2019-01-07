@@ -3,6 +3,9 @@ package com.revature.jdbcbank.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.jdbcbank.dao.TransactionDao;
 import com.revature.jdbcbank.dao.TransactionOracle;
 import com.revature.jdbcbank.models.Transaction;
@@ -10,6 +13,7 @@ import com.revature.jdbcbank.models.Transaction;
 public class TransactionService {
 	private static TransactionService transactionService;
 	final static TransactionDao transactionDao = TransactionOracle.getTranscationDao();
+	private static final Logger logger = LogManager.getLogger(TransactionService.class);
 	
 	private TransactionService() {
 		
@@ -21,6 +25,7 @@ public class TransactionService {
 	 */
 	public static TransactionService getTransactionService() {
 		if(transactionService == null) {
+			logger.info("Creating new transaction service");
 			transactionService = new TransactionService();
 		}
 		
@@ -32,7 +37,8 @@ public class TransactionService {
 	 * @return all of the transactions in the database or empty if an error occurred
 	 */
 	public Optional<List<Transaction>> getAllTransactions() {
-		return transactionDao.getAllTransactions();
+		logger.traceEntry("Getting all transactions");
+		return logger.traceExit(transactionDao.getAllTransactions());
 	}
 	
 	/**
@@ -41,6 +47,7 @@ public class TransactionService {
 	 * @return all of the transactions associated with the user ID or empty if an error occurred
 	 */
 	public Optional<List<Transaction>> getAllTransactionsByUser(int userId) {
+		logger.traceEntry("Getting all transactions by user with ID = {}", userId);
 		return transactionDao.getAllTransactionsByUser(userId);
 	}
 }

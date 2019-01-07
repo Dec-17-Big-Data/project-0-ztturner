@@ -34,7 +34,7 @@ public class UserServiceTest {
 		String inputUsername = "whitespace username";
 		String inputPassword = "password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -42,7 +42,7 @@ public class UserServiceTest {
 		String inputUsername = "\n\r\t";
 		String inputPassword = "password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -50,7 +50,7 @@ public class UserServiceTest {
 		String inputUsername = "username";
 		String inputPassword = "whitespace password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -58,7 +58,7 @@ public class UserServiceTest {
 		String inputUsername = "username";
 		String inputPassword = "    \r\n\t\n    ";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -66,7 +66,7 @@ public class UserServiceTest {
 		String inputUsername = "";
 		String inputPassword = "password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -74,7 +74,7 @@ public class UserServiceTest {
 		String inputUsername = "afw;oifjawebafw;oifjas9fasiuhfawsbaw9823hfalsehr298hrewpaf9hfwa3iurhaw98havaiudh";
 		String inputPassword = "password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -82,7 +82,7 @@ public class UserServiceTest {
 		String inputUsername = "okayuser";
 		String inputPassword = "pass";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -90,7 +90,7 @@ public class UserServiceTest {
 		String inputUsername = "okayuser";
 		String inputPassword = "afw;oifjawebafw;oifjas9fasiuhfawsbaw9823hfalsehr298hrewpaf9hfwa3iurhaw98havaiudh";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test(expected=ItemExistsException.class)
@@ -98,7 +98,7 @@ public class UserServiceTest {
 		String inputUsername = "newuser";
 		String inputPassword = "password";
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
+		userService.createUser(inputUsername, inputPassword);
 	}
 	
 	@Test
@@ -116,7 +116,7 @@ public class UserServiceTest {
 		String inputUsername = "newuser";
 		String inputPassword = "wrongpassword";
 		
-		int loginUserId = userService.loginUser(inputUsername, inputPassword);
+		userService.loginUser(inputUsername, inputPassword);
 	}
 	
 	@Test
@@ -134,7 +134,7 @@ public class UserServiceTest {
 		String inputPassword = "password";
 		int userId = 0;
 		
-		int updateSuccess = userService.updateUserPassword(userId, inputPassword);
+		userService.updateUserPassword(userId, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -142,7 +142,7 @@ public class UserServiceTest {
 		String inputPassword = "pass";
 		int userId = 1;
 		
-		int updateSuccess = userService.updateUserPassword(userId, inputPassword);
+		userService.updateUserPassword(userId, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class) 
@@ -150,7 +150,7 @@ public class UserServiceTest {
 		String inputPassword = "afw;oifjawebafw;oifjas9fasiuhfawsbaw9823hfalsehr298hrewpaf9hfwa3iurhaw98havaiudh";
 		int userId = 1;
 		
-		int updateSuccess = userService.updateUserPassword(userId, inputPassword);
+		userService.updateUserPassword(userId, inputPassword);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -158,7 +158,7 @@ public class UserServiceTest {
 		String inputPassword = "whitespacepassword    ";
 		int userId = 1;
 		
-		int updateSuccess = userService.updateUserPassword(userId, inputPassword);
+		userService.updateUserPassword(userId, inputPassword);
 	}
 	
 	
@@ -167,13 +167,13 @@ public class UserServiceTest {
 		String inputPassword = "                \r\t\n";
 		int userId = 1;
 		
-		int updateSuccess = userService.updateUserPassword(userId, inputPassword);
+		userService.updateUserPassword(userId, inputPassword);
 	}
 	
 	@Test(expected=ItemNotFoundException.class)
 	public void testDeletingUserNonExistentUser() {
 		int userId = 0;
 		
-		int deleteSuccess = userService.deleteUser(userId);
+		userService.deleteUser(userId);
 	}
 }

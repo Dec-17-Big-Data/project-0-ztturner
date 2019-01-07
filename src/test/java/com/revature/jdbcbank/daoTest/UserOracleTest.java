@@ -1,7 +1,6 @@
 package com.revature.jdbcbank.daoTest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class UserOracleTest {
 	@Test(expected=NoSuchElementException.class)
 	public void testGettingUserByIdInvalid() {
 		Optional<User> userWrapper = userOracle.getUserById(-5);
-		User actualUser = userWrapper.get();
+		userWrapper.get();
 	}
 	
 	@Test
@@ -67,7 +66,7 @@ public class UserOracleTest {
 	@Test(expected=NoSuchElementException.class)
 	public void testGettingUserByUsernameInvalid() {
 		Optional<User> userWrapper = userOracle.getUserByUsername("nonexistentuser");
-		User actualUser = userWrapper.get();
+		userWrapper.get();
 	}
 	
 	@Test

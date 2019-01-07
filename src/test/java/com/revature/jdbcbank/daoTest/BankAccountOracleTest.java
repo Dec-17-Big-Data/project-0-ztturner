@@ -48,7 +48,7 @@ public class BankAccountOracleTest {
 	@Test(expected=NoSuchElementException.class)
 	public void testGettingBankAccountByIdInvalid() {
 		Optional<BankAccount> accountWrapper = bankAccountOracle.getBankAccountById(-2);
-		BankAccount actualAccount = accountWrapper.get();
+		accountWrapper.get();
 	}
 	
 	@Test
@@ -64,7 +64,7 @@ public class BankAccountOracleTest {
 	@Test(expected=NoSuchElementException.class)
 	public void testGettingBankAccountByNameInvalid() {
 		Optional<BankAccount> accountWrapper = bankAccountOracle.getBankAccountByName("FamilySavings", 1);
-		BankAccount actualAccount = accountWrapper.get();
+		accountWrapper.get();
 	}
 	
 	@Test
