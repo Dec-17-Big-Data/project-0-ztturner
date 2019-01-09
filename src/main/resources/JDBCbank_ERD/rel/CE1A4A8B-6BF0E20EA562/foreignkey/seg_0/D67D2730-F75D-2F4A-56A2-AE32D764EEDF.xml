@@ -1,0 +1,19 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="D67D2730-F75D-2F4A-56A2-AE32D764EEDF" containerWithKeyObject="D7771DF3-F69A-DFEC-BA43-6C1510BB7727" localFKIndex="D4F6BBF5-C497-67C3-3523-894C9E6EEB62" name="FK_ACCOUNT_USER">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>FK_ACCOUNT_USER</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<referredTableLongName>TURNERZT.BANK_USERS</referredTableLongName>
+<deleteRule>CASCADE</deleteRule>
+<referredTableID>BA075EEA-6F7C-264E-BE55-FB47C013B5C5</referredTableID>
+<keyObject>96156941-BDD2-53BA-A190-2D94559CA8C0</keyObject>
+<referredKeyID>96156941-BDD2-53BA-A190-2D94559CA8C0</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>USER_ID</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

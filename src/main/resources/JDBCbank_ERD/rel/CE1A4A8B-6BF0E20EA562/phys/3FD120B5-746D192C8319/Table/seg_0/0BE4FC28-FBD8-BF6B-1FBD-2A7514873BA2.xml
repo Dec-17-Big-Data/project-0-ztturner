@@ -1,0 +1,62 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="BANK_TRANSACTIONS" directorySegmentName="seg_0" id="0BE4FC28-FBD8-BF6B-1FBD-2A7514873BA2">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:28 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<schemaObject>977CC72C-4908-751C-940E-FC0CF8E5D2E1</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>94567DE5-4A93-E73F-A6B5-B478DE8150DA</segment>
+<tableSpace>A639F39B-BDF8-1072-3E3A-F95AB94A2608</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="TRANSACTION_ID" id="3D32C6FA-34A9-B90C-5A95-A055283CDEF4">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TRANSACTION_AMOUNT" id="7B26AE73-49B6-AF0B-0D44-2664B30A063C">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BANK_ACCOUNT_ID" id="933B709A-C4A8-3484-4855-9DF3E468D2F7">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TRANSACTION_TYPE" id="985ABC81-C36E-C4CA-491B-8331210B47C0">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="TIME_OF_TRANSACTION" id="AFDB02E9-B35E-7720-BBE2-F96875A72F5A">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="FK_TRANSACTION_ACCOUNT" id="26681A0E-1BFC-ADE9-6255-CC3FE74CF8EF">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BANK_TRANSACTIONS_PK" id="06BFD68C-5909-25E7-8058-99000A3D28EE">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<schemaObject>977CC72C-4908-751C-940E-FC0CF8E5D2E1</schemaObject>
+<segment>1587B0BF-0E5F-E116-76AB-C6D62E722561</segment>
+<tableSpace>A639F39B-BDF8-1072-3E3A-F95AB94A2608</tableSpace>
+<indexSegment>1587B0BF-0E5F-E116-76AB-C6D62E722561</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev12c>

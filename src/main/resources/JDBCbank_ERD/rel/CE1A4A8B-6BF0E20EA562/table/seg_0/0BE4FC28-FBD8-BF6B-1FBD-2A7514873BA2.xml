@@ -1,0 +1,115 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0BE4FC28-FBD8-BF6B-1FBD-2A7514873BA2" schemaObject="977CC72C-4908-751C-940E-FC0CF8E5D2E1" name="BANK_TRANSACTIONS">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>BANK_TRANSACTIONS</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:28 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="TRANSACTION_ID" id="3D32C6FA-34A9-B90C-5A95-A055283CDEF4">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_TRANSACTIONS</sourceObjSchema>
+<sourceObjName>TRANSACTION_ID</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TRANSACTION_TYPE" id="985ABC81-C36E-C4CA-491B-8331210B47C0">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_TRANSACTIONS</sourceObjSchema>
+<sourceObjName>TRANSACTION_TYPE</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>15 BYTE</dataTypeSize>
+<ownDataTypeParameters>15 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TRANSACTION_AMOUNT" id="7B26AE73-49B6-AF0B-0D44-2664B30A063C">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_TRANSACTIONS</sourceObjSchema>
+<sourceObjName>TRANSACTION_AMOUNT</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT056</logicalDatatype>
+<dataTypeSize>8</dataTypeSize>
+<ownDataTypeParameters>8,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TIME_OF_TRANSACTION" id="AFDB02E9-B35E-7720-BBE2-F96875A72F5A">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_TRANSACTIONS</sourceObjSchema>
+<sourceObjName>TIME_OF_TRANSACTION</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT015</logicalDatatype>
+<dataTypePrecision>6</dataTypePrecision>
+<ownDataTypeParameters>,6,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BANK_ACCOUNT_ID" id="933B709A-C4A8-3484-4855-9DF3E468D2F7">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_TRANSACTIONS</sourceObjSchema>
+<sourceObjName>BANK_ACCOUNT_ID</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="6A17D9D5-19E9-46D0-C901-7E647B02DD01" referredColumn="527A1861-771B-E9A3-7257-6B543D971D97"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="06BFD68C-5909-25E7-8058-99000A3D28EE" schemaObject="977CC72C-4908-751C-940E-FC0CF8E5D2E1" name="BANK_TRANSACTIONS_PK">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>SYS_C005722</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3D32C6FA-34A9-B90C-5A95-A055283CDEF4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="26681A0E-1BFC-ADE9-6255-CC3FE74CF8EF" name="FK_TRANSACTION_ACCOUNT">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="933B709A-C4A8-3484-4855-9DF3E468D2F7"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
