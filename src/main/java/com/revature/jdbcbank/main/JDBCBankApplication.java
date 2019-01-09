@@ -54,9 +54,11 @@ public class JDBCBankApplication {
 			return;
 		}
 		
+		int menuSize = loginMenu.getSize();
+		
 		// user selects an option
 		System.out.println("Welcome to the JDBCBank Application");
-		while(loginMenuIndex != 4) {
+		while(loginMenuIndex != menuSize) {
 			System.out.println("");
 			System.out.println(loginMenu.toString());
 			System.out.println("Select an option.");
@@ -154,12 +156,21 @@ public class JDBCBankApplication {
 	 * @param currentUserId - the ID of the logged in user
 	 * @param kb - keyboard Scanner
 	 */
-	private static void loggedInUserMenu(int currentUserId, Scanner kb) {
+	public static void loggedInUserMenu(int currentUserId, Scanner kb) {
+		// setup the services
+		BankAccountService bankAccountService = BankAccountService.getBankAccountService();
+		UserService userService = UserService.getUserService();
+		TransactionService transactionService = TransactionService.getTransactionService();
+		
 		// only logged in users are allowed
-		if(currentUserId <= 0) {
-			logger.info("Invalid user id. Exiting logged in user menu");
+		Optional<User> currentUserWrapper = userService.getUserById(currentUserId);
+		if(!currentUserWrapper.isPresent()) {
+			System.out.println("Invalid user.");
+			logger.info("Invalid user. Exiting logged in user menu");
 			return;
 		}
+		
+		User currentUser = currentUserWrapper.get();
 		
 		// setup the logged in user menu
 		Menu userMenu = new Menu();
@@ -185,23 +196,20 @@ public class JDBCBankApplication {
 			logger.error("The input does not exist in the menu item", e);
 			return;
 		}
-		
-		// setup the services
-		BankAccountService bankAccountService = BankAccountService.getBankAccountService();
-		UserService userService = UserService.getUserService();
-		TransactionService transactionService = TransactionService.getTransactionService();
 
 		double amount = 0;
 		Optional<List<BankAccount>> accountsWrapper;
 		String input;
 		String[] accountInfo;
 		int accountId;
-		String username = userService.getUserById(currentUserId).get().getUserName();
+		String username = currentUser.getUserName();
 		
 		System.out.println("Welcome, " + username);
 		
+		int menuSize = userMenu.getSize();
+		
 		// user selects an option
-		while(menuIndex != 8) {
+		while(menuIndex != menuSize) {
 			System.out.println("");
 			System.out.println(userMenu.toString());
 			System.out.println("Select an option.");
@@ -505,8 +513,10 @@ public class JDBCBankApplication {
 		String input;
 		String[] userInfo;
 		
+		int menuSize = superUserMenu.getSize();
+		
 		// User selects an option
-		while(menuIndex != 5) {
+		while(menuIndex != menuSize) {
 			System.out.println("");
 			System.out.println(superUserMenu.toString());
 			System.out.println("Select an option.");
@@ -666,7 +676,7 @@ public class JDBCBankApplication {
 	 * @param kb - keyboard Scanner
 	 * @return the input user info
 	 */
-	private static String[] getUserInfo(Scanner kb) {
+	public static String[] getUserInfo(Scanner kb) {
 		logger.traceEntry("Getting user Info");
 		String[] userInfo = new String[2];
 		
@@ -684,7 +694,7 @@ public class JDBCBankApplication {
 	 * @return the input account info
 	 * @throws NumberFormatException - thrown if the initial balance input cannot be converted into a double
 	 */
-	private static String[] getAccountInfo(Scanner kb) throws NumberFormatException {
+	public static String[] getAccountInfo(Scanner kb) throws NumberFormatException {
 		logger.traceEntry("Getting account info");
 		String[] accountInfo = new String[2];
 		
@@ -704,7 +714,7 @@ public class JDBCBankApplication {
 	 * @return the input converted to a double
 	 * @throws NumberFormatException - thrown if the user's input cannot be converted to a double
 	 */
-	private static double getAmount(Scanner kb) throws NumberFormatException {
+	public static double getAmount(Scanner kb) throws NumberFormatException {
 		logger.traceEntry("Getting amount value");
 		String input;
 		double amount;
@@ -724,11 +734,17 @@ public class JDBCBankApplication {
 	 * @param kb - keyboard Scanner
 	 * @return the selected item's index or -1 for invalid input
 	 */
-	private static <T> int selectItem(List<T> items, String typeName, Scanner kb) {
+	public static <T> int selectItem(List<T> items, String typeName, Scanner kb) {
 		logger.traceEntry("Generating display from list of items.");
 		String input;
 		int selectedIndex = -1;
 		int index = 0;
+		
+		if(items.size() == 0) {
+			System.out.println("No items to select.");
+			return selectedIndex;
+		}
+		
 		for(T item : items) {
 			index++;
 			System.out.println(index + ". " + item.toString());
@@ -756,7 +772,7 @@ public class JDBCBankApplication {
 	 * @return - whether or not the login attempt was successful
 	 * @throws InvalidCredentialsException - if the login username or password was incorrect
 	 */
-	private static int loginSuperUser(String loginUsername, String loginPassword) throws InvalidCredentialsException {
+	public static int loginSuperUser(String loginUsername, String loginPassword) throws InvalidCredentialsException {
 		logger.traceEntry("Attempting login to superuser");
 		InputStream in = null;
 		int success = -1;

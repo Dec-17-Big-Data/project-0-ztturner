@@ -45,7 +45,7 @@ public class BankAccountService {
 	}
 	
 	/**
-	 * Gets all the bank accounts associated with given user ID
+	 * Gets all the bank accounts associated with the given user ID.
 	 * @param userId - the given user ID
 	 * @return list of all the bank accounts associated with the given user or empty if an error occurred
 	 */
@@ -55,7 +55,7 @@ public class BankAccountService {
 	}
 	
 	/**
-	 * Gets the bank account with the given bank account ID
+	 * Gets the bank account with the given bank account ID.
 	 * @param bankAccountId - the given bank account ID
 	 * @return the bank account with the given bank account ID or empty if not found
 	 */
@@ -65,7 +65,7 @@ public class BankAccountService {
 	}
 	
 	/**
-	 * Gets the bank account with the given name that is associated with the given user ID
+	 * Gets the bank account with the given name that is associated with the given user ID.
 	 * @param name - the given account name
 	 * @param userId - the given user ID
 	 * @return the bank account with the given name and associated user ID or empty if not found
@@ -121,7 +121,7 @@ public class BankAccountService {
 	}
 	
 	/**
-	 * Attempts to delete the bank account with the given bank account ID
+	 * Attempts to delete the bank account with the given bank account ID.
 	 * @param bankAccountId - the given bank account ID
 	 * @return 1 if the attempt was successful, 0 if the attempt failed, -1 if there was an error
 	 * @throws ItemNotFoundException - thrown when the bank account with the given bank account ID is not found
@@ -148,8 +148,8 @@ public class BankAccountService {
 	}
 	
 	/**
-	 * Attempts to make a deposit into the bank account 
-	 * with the given bank account ID
+	 * Attempts to make a deposit into the bank account
+	 * with the given bank account ID.
 	 * @param bankAccountId - the given bank account ID
 	 * @param amount - the amount to deposit
 	 * @return 1 if the deposit was successful, 0 if the deposit failed, -1 if an error occurred
@@ -181,7 +181,7 @@ public class BankAccountService {
 	
 	/**
 	 * Attempts to make a withdrawal from the bank account 
-	 * with the given bank account ID
+	 * with the given bank account ID.
 	 * @param bankAccountId - the given bank account ID
 	 * @param amount - the amount to withdraw
 	 * @return 1 if the withdrawal was successful, 0 if the withdrawal failed, -1 if an error occurred

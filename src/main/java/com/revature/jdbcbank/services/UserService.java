@@ -23,7 +23,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Gets the user service
+	 * Gets the user service.
 	 * @return the user service
 	 */
 	public static UserService getUserService() {
@@ -45,7 +45,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Gets the user with the given UserID.
+	 * Gets the user with the given user ID.
 	 * @param userId - the given user ID
 	 * @return the user with the given user ID or empty if the user could not be found
 	 */
@@ -55,7 +55,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Gets the user with the given username
+	 * Gets the user with the given username.
 	 * @param username - the given username
 	 * @return the user with the given username or empty if the user could not be found
 	 */
@@ -65,7 +65,7 @@ public class UserService {
 	}
 	
 	/**
-	 * Attempts to login a user by matching the given username and password
+	 * Attempts to login a user by matching the given username and password.
 	 * with one in the database.
 	 * @param username - the given username
 	 * @param password - the given password

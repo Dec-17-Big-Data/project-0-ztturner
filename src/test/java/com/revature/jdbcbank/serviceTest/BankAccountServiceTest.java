@@ -1,11 +1,16 @@
 package com.revature.jdbcbank.serviceTest;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.revature.jdbcbank.exceptions.*;
+import com.revature.jdbcbank.models.BankAccount;
 import com.revature.jdbcbank.services.BankAccountService;
 
 public class BankAccountServiceTest {
@@ -15,20 +20,6 @@ public class BankAccountServiceTest {
 	@BeforeClass
 	public static void setup() {
 		bankAccountService = BankAccountService.getBankAccountService();
-	}
-	
-	@Test
-	public void testCreatingBankAccountValidInput() {
-		String accountName = "GoodAccountName";
-		double initialBalance = 25.75;
-		int userId = 1;
-		
-		int newAccountId = bankAccountService.createBankAccount(accountName, initialBalance, userId);
-		
-		assertTrue(newAccountId > 0);
-		
-		bankAccountService.makeWithdrawal(newAccountId, initialBalance);
-		bankAccountService.deleteBankAccount(newAccountId);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -90,6 +81,16 @@ public class BankAccountServiceTest {
 		bankAccountService.deleteBankAccount(accountId);
 	}
 	
+	@Test
+	public void testMakingDepositValidInput() {
+		int accountId = 1;
+		double amount = 5.55;
+		
+		int success = bankAccountService.makeDeposit(accountId, amount);
+		
+		assertEquals(1, success);
+	}
+	
 	@Test(expected=ItemNotFoundException.class)
 	public void testMakingDepositNonExistentAccount() {
 		int accountId = 0;
@@ -112,6 +113,16 @@ public class BankAccountServiceTest {
 		double amount = 0;
 		
 		bankAccountService.makeDeposit(accountId, amount);
+	}
+	
+	@Test
+	public void testMakingWithdrawalValidInput() {
+		int accountId = 1;
+		double amount = 5.55;
+		
+		int success = bankAccountService.makeWithdrawal(accountId, amount);
+		
+		assertEquals(1, success);
 	}
 	
 	@Test(expected=ItemNotFoundException.class)

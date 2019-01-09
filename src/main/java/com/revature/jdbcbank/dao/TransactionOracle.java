@@ -42,11 +42,11 @@ public class TransactionOracle implements TransactionDao {
 		}
 		
 		try {
-			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, "
-					     + "a.bank_account_id, a.account_name, a.balance, a.user_id " 
-		                 + "from bank_transactions t "
-		                 + "inner join bank_accounts a on t.bank_account_id = a.bank_account_id "
-		                 + "order by transaction_id";			
+			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, t.time_of_transaction, "
+					   + "a.bank_account_id, a.account_name, a.balance, a.user_id " 
+		               + "from bank_transactions t "
+		               + "inner join bank_accounts a on t.bank_account_id = a.bank_account_id "
+		               + "order by transaction_id";			
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			List<Transaction> transactions = new ArrayList<Transaction>();
@@ -55,10 +55,12 @@ public class TransactionOracle implements TransactionDao {
 				transactions.add(new Transaction(rs.getInt("transaction_id"),
 												 rs.getString("transaction_type"), 
 												 rs.getDouble("transaction_amount"),
+												 rs.getTimestamp("time_of_transaction"),
 												 new BankAccount(rs.getInt("bank_account_id"),
 														 		 rs.getString("account_name"),
 														 		 rs.getDouble("balance"),
-														 		 rs.getInt("user_id"))));
+														 		 rs.getInt("user_id"))
+												 ));
 			}
 			
 			return logger.traceExit(Optional.of(transactions));
@@ -81,7 +83,7 @@ public class TransactionOracle implements TransactionDao {
 		}
 		
 		try {
-			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, "
+			String sql = "select t.transaction_id, t.transaction_type, t.transaction_amount, t.time_of_transaction, "
 					   + "a.bank_account_id, a.account_name, a.balance, a.user_id "
 		               + "from bank_transactions t "
 		               + "inner join bank_accounts a on t.bank_account_id = a.bank_account_id "
@@ -95,10 +97,12 @@ public class TransactionOracle implements TransactionDao {
 				transactions.add(new Transaction(rs.getInt("transaction_id"),
 												 rs.getString("transaction_type"), 
 												 rs.getDouble("transaction_amount"),
+												 rs.getTimestamp("time_of_transaction"),
 												 new BankAccount(rs.getInt("bank_account_id"),
 														 		 rs.getString("account_name"),
 														 		 rs.getDouble("balance"),
-														 		 rs.getInt("user_id"))));
+														 		 rs.getInt("user_id"))
+												 ));
 			}
 			
 			return logger.traceExit(Optional.of(transactions));

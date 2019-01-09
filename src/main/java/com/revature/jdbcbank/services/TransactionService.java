@@ -20,7 +20,7 @@ public class TransactionService {
 	}
 	
 	/**
-	 * Gets the transaction service
+	 * Gets the transaction service.
 	 * @return the transaction service
 	 */
 	public static TransactionService getTransactionService() {
@@ -33,7 +33,7 @@ public class TransactionService {
 	}
 	
 	/**
-	 * Gets all of the transactions in the database
+	 * Gets all of the transactions in the database.
 	 * @return all of the transactions in the database or empty if an error occurred
 	 */
 	public Optional<List<Transaction>> getAllTransactions() {
@@ -42,7 +42,7 @@ public class TransactionService {
 	}
 	
 	/**
-	 * Gets all of the transactions associated with a given user in the database
+	 * Gets all of the transactions associated with a given user in the database.
 	 * @param userId - the given user ID
 	 * @return all of the transactions associated with the user ID or empty if an error occurred
 	 */

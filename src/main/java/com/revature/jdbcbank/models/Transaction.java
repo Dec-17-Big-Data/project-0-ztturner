@@ -1,6 +1,7 @@
 package com.revature.jdbcbank.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Transaction implements Serializable {
 	
@@ -8,17 +9,19 @@ public class Transaction implements Serializable {
 	private int transactionId;
 	private String transactionType;
 	private double transactionAmount;
+	private Timestamp timeOfTransaction;
 	private BankAccount account;
 	
 	public Transaction() {
 		super();
 	}
 
-	public Transaction(int transactionId, String transactionType, double transactionAmount, BankAccount account) {
+	public Transaction(int transactionId, String transactionType, double transactionAmount, Timestamp timeOfTransaction, BankAccount account) {
 		super();
 		this.transactionId = transactionId;
 		this.transactionType = transactionType;
 		this.transactionAmount = transactionAmount;
+		this.timeOfTransaction = timeOfTransaction;
 		this.account = account;
 	}
 
@@ -45,6 +48,14 @@ public class Transaction implements Serializable {
 	public void setTransactionAmount(double transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
+	
+	public Timestamp getTimeOfTransaction() {
+		return timeOfTransaction;
+	}
+
+	public void setTimeOfTransaction(Timestamp timeOfTransaction) {
+		this.timeOfTransaction = timeOfTransaction;
+	}
 
 	public BankAccount getAccount() {
 		return account;
@@ -59,6 +70,7 @@ public class Transaction implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((account == null) ? 0 : account.hashCode());
+		result = prime * result + ((timeOfTransaction == null) ? 0 : timeOfTransaction.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(transactionAmount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -81,6 +93,11 @@ public class Transaction implements Serializable {
 				return false;
 		} else if (!account.equals(other.account))
 			return false;
+		if (timeOfTransaction == null) {
+			if (other.timeOfTransaction != null)
+				return false;
+		} else if (!timeOfTransaction.equals(other.timeOfTransaction))
+			return false;
 		if (Double.doubleToLongBits(transactionAmount) != Double.doubleToLongBits(other.transactionAmount))
 			return false;
 		if (transactionId != other.transactionId)
@@ -96,7 +113,8 @@ public class Transaction implements Serializable {
 	@Override
 	public String toString() {
 		return "Transaction [transactionId=" + transactionId + ", transactionType=" + transactionType
-				+ ", transactionAmount=" + transactionAmount + ", accountId=" + account.getAccountId() + ", accountName=" + account.getName() + "]";
+				+ ", transactionAmount=" + transactionAmount + ", timeOfTransaction=" + timeOfTransaction.toString()
+				+ ", accountId=" + account.getAccountId() + ", accountName=" + account.getName() + "]";
 	}
 	
 	

@@ -1,13 +1,3 @@
---drop tables
-drop table bank_transactions;
-drop table bank_accounts;
-drop table bank_users;
-
---drop sequences
-drop sequence transaction_id_sequence;
-drop sequence user_id_sequence;
-drop sequence bank_account_id_sequence;
-
 --create tables
 create table bank_users
 (
@@ -29,6 +19,7 @@ create table bank_transactions
     transaction_id number(10) primary key,
     transaction_type varchar2(15) not null,
     transaction_amount binary_double not null,
+    time_of_transaction timestamp not null,
     bank_account_id number(10) not null
 );
 
@@ -125,8 +116,10 @@ create or replace procedure createBankAccount(new_account_name in varchar2, init
             values (bank_account_id_sequence.nextval, new_account_name, initial_balance, account_user_id);
             new_account_id := bank_account_id_sequence.currval;
             --insert a deposit transaction for the initial amount
-            insert into bank_transactions (transaction_id, transaction_type, transaction_amount, bank_account_id)
-            values (transaction_id_sequence.nextval, 'Initial Deposit', initial_balance, new_account_id);
+            if initial_balance > 0 then
+                insert into bank_transactions (transaction_id, transaction_type, transaction_amount, time_of_transaction, bank_account_id)
+                values (transaction_id_sequence.nextval, 'Initial Deposit', initial_balance, localtimestamp, new_account_id);
+            end if;
             commit;
         end if;
     end;
@@ -161,10 +154,10 @@ create or replace procedure makeDeposit(deposit_account_id in number, deposit_am
         amountInAccount := amountInAccount + deposit_amount;
         --update the amount in the account
         update bank_accounts set balance = amountInAccount where bank_account_id = deposit_account_id;
-        deposit_success := 1;
         --insert a transaction for the deposit
-        insert into bank_transactions (transaction_id, transaction_type, transaction_amount, bank_account_id)
-        values (transaction_id_sequence.nextval, 'Deposit', deposit_amount, deposit_account_id);
+        insert into bank_transactions (transaction_id, transaction_type, transaction_amount, time_of_transaction, bank_account_id)
+        values (transaction_id_sequence.nextval, 'Deposit', deposit_amount, localtimestamp, deposit_account_id);
+        deposit_success := 1;
         commit;
     exception
         when no_data_found then
@@ -187,8 +180,8 @@ create or replace procedure makeWithdrawal(withdrawal_account_id in number, with
             update bank_accounts set balance = amountInAccount where bank_account_id = withdrawal_account_id;
             withdrawal_success := 1;
             --insert a transcation for the withdrawal
-            insert into bank_transactions (transaction_id, transaction_type, transaction_amount, bank_account_id)
-            values (transaction_id_sequence.nextval, 'Withdrawal', withdrawalAmount, withdrawal_account_id);
+            insert into bank_transactions (transaction_id, transaction_type, transaction_amount, time_of_transaction, bank_account_id)
+            values (transaction_id_sequence.nextval, 'Withdrawal', withdrawalAmount, localtimestamp, withdrawal_account_id);
             commit;
         end if;
     exception
@@ -196,19 +189,3 @@ create or replace procedure makeWithdrawal(withdrawal_account_id in number, with
             withdrawal_success := 0;
     end;
 /
-
--- populate tables and test procedures
-variable id number
-
-exec createUser('newuser', 'password', :id);
-exec createUser('belmontr', 'bloodlines', :id);
-exec createUser('anotheruser', 'anotherpassword', :id);
-exec createBankAccount('MySavings', 5.00, 1, :id);
-exec createBankAccount('Checking', 5.00, 1, :id);
-exec createBankAccount('FamilySavings', 1000.50, 2, :id);
-
-variable success number
-
-exec updateUserPassword(2, 'begonemonster', :success);
-exec makeDeposit(2, 50.00, :success);
-exec makeWithdrawal(2, 50.00, :success);

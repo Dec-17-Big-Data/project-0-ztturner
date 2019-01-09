@@ -4,9 +4,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.revature.jdbcbank.exceptions.*;
+import com.revature.jdbcbank.models.User;
 import com.revature.jdbcbank.services.UserService;
 
 import static org.junit.Assert.*;
+
+import java.util.List;
+import java.util.Optional;
 
 public class UserServiceTest {
 	
@@ -18,15 +22,10 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testCreatingUserValidInput() {
-		String inputUsername = "available";
-		String inputPassword = "agoodpassword";
+	public void testGettingAllUsers() {
+		Optional<List<User>> users = userService.getAllUsers();
 		
-		int newUserId = userService.createUser(inputUsername, inputPassword);
-
-		assertTrue(newUserId > 0);
-		
-		userService.deleteUser(newUserId);
+		assertTrue(users.isPresent());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -147,7 +146,7 @@ public class UserServiceTest {
 	
 	@Test(expected=IllegalArgumentException.class) 
 	public void testUpdatingPasswordLongPassword() {
-		String inputPassword = "afw;oifjawebafw;oifjas9fasiuhfawsbaw9823hfalsehr298hrewpaf9hfwa3iurhaw98havaiudh";
+		String inputPassword = "afw;oifjawebafw;oifjas9fasiuhfawsbaw9823hfalsehr298hrewpaf";
 		int userId = 1;
 		
 		userService.updateUserPassword(userId, inputPassword);
