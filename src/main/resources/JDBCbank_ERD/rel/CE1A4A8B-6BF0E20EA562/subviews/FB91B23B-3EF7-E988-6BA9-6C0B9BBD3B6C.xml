@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Diagram class="oracle.dbtools.crest.swingui.relational.DPVRelational" name="Relational_1" id="FB91B23B-3EF7-E988-6BA9-6C0B9BBD3B6C">
+<createdBy>Zach</createdBy>
+<modifiedBy>Zach</modifiedBy>
+<createdTime>2019-01-09 13:32:27 UTC</createdTime>
+<autoRoute>false</autoRoute>
+<boxInbox>true</boxInbox>
+<showLegend>false</showLegend>
+<showLabels>false</showLabels>
+<showRelAttributes>false</showRelAttributes>
+<gridEnabled>false</gridEnabled>
+<showGrid>false</showGrid>
+<diagramColor>-1</diagramColor>
+<display>false</display>
+<notation>1</notation>
+<objectViews>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="0BE4FC28-FBD8-BF6B-1FBD-2A7514873BA2" otype="Table" vid="BEE8774F-7EC1-D583-440F-6DBAEEEF033C">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="20" y="20" width="293" height="136"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="BA075EEA-6F7C-264E-BE55-FB47C013B5C5" otype="Table" vid="C6DF7B05-5B48-091E-A514-EE78CFC03719">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="20" y="398" width="255" height="102"/>
+</OView>
+<OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="D7771DF3-F69A-DFEC-BA43-6C1510BB7727" otype="Table" vid="885C93E2-3348-0DDE-979E-E96417C0C919">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<bounds x="20" y="216" width="266" height="122"/>
+</OView>
+</objectViews>
+<connectors>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="6A17D9D5-19E9-46D0-C901-7E647B02DD01" otype="FKIndexAssociation" vid_source="885C93E2-3348-0DDE-979E-E96417C0C919" vid_target="BEE8774F-7EC1-D583-440F-6DBAEEEF033C">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="153" y="216"/>
+<point x="153" y="156"/>
+</points>
+</Connector>
+<Connector class="oracle.dbtools.crest.swingui.relational.TVFKRelation" oid="D67D2730-F75D-2F4A-56A2-AE32D764EEDF" otype="FKIndexAssociation" vid_source="C6DF7B05-5B48-091E-A514-EE78CFC03719" vid_target="885C93E2-3348-0DDE-979E-E96417C0C919">
+<hideElementsInCurrentOnly>false</hideElementsInCurrentOnly>
+<backgroundColor>-16777216</backgroundColor>
+<lineWidth>1</lineWidth>
+<points>
+<point x="147" y="398"/>
+<point x="147" y="338"/>
+</points>
+</Connector>
+</connectors>
+</Diagram>

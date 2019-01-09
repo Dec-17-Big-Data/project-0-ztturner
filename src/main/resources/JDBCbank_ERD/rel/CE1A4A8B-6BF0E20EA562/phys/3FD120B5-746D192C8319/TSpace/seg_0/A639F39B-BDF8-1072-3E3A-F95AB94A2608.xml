@@ -1,0 +1,11 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableSpaceOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableSpaceOraclev10g" name="USERS" directorySegmentName="seg_0" id="A639F39B-BDF8-1072-3E3A-F95AB94A2608">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>USERS</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:28 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<emUniformSize>0</emUniformSize>
+<extentManagement>LOCAL</extentManagement>
+</TableSpaceOraclev10g>

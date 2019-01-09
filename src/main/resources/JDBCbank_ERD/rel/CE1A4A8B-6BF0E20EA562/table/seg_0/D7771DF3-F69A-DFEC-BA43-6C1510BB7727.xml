@@ -1,0 +1,103 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D7771DF3-F69A-DFEC-BA43-6C1510BB7727" schemaObject="977CC72C-4908-751C-940E-FC0CF8E5D2E1" name="BANK_ACCOUNTS">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>BANK_ACCOUNTS</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:28 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="BANK_ACCOUNT_ID" id="527A1861-771B-E9A3-7257-6B543D971D97">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNTS</sourceObjSchema>
+<sourceObjName>BANK_ACCOUNT_ID</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ACCOUNT_NAME" id="2D9D0F0C-E92F-002D-2122-F087CCFCA091">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNTS</sourceObjSchema>
+<sourceObjName>ACCOUNT_NAME</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>50 BYTE</dataTypeSize>
+<ownDataTypeParameters>50 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BALANCE" id="FDBCA292-50D0-CE3F-54CF-E93E90385417">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNTS</sourceObjSchema>
+<sourceObjName>BALANCE</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT056</logicalDatatype>
+<dataTypeSize>8</dataTypeSize>
+<defaultValue>0</defaultValue>
+<ownDataTypeParameters>8,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_ID" id="A29CEE73-A3E5-BD14-747D-A3BD4439CF70">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>BANK_ACCOUNTS</sourceObjSchema>
+<sourceObjName>USER_ID</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<ownDataTypeParameters>,10,0</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D67D2730-F75D-2F4A-56A2-AE32D764EEDF" referredColumn="F9E6B3ED-B6B5-6059-6F08-9CE3E1A9CD8B"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="2C7CDD53-6EDE-2275-7F68-67D9B1727EFB" schemaObject="977CC72C-4908-751C-940E-FC0CF8E5D2E1" name="BANK_ACCOUNTS_PK">
+<sourceConnName>Revature 1217 AWS RDS</sourceConnName>
+<sourceObjSchema>TURNERZT</sourceObjSchema>
+<sourceObjName>SYS_C005717</sourceObjName>
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="527A1861-771B-E9A3-7257-6B543D971D97"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D4F6BBF5-C497-67C3-3523-894C9E6EEB62" name="FK_ACCOUNT_USER">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A29CEE73-A3E5-BD14-747D-A3BD4439CF70"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

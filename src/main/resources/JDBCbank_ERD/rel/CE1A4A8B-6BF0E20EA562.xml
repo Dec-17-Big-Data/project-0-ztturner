@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<relationalModel class="oracle.dbtools.crest.model.design.relational.RelationalDesign" name="Relational_1" id="CE1A4A8B-3E9D-BACF-5F19-6BF0E20EA562" mainViewID="FB91B23B-3EF7-E988-6BA9-6C0B9BBD3B6C">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:04 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+<selectedRDBMSSite>3FD120B5-9F4E-6278-D5E2-746D192C8319</selectedRDBMSSite>
+<importConnectionStamps>
+<importConnectionStamp class="oracle.dbtools.crest.imports.DBConnectionStamp">
+<connName>Revature 1217 AWS RDS</connName>
+<connUser>turnerzt</connUser>
+<connType>1</connType>
+</importConnectionStamp>
+</importConnectionStamps>
+</relationalModel>

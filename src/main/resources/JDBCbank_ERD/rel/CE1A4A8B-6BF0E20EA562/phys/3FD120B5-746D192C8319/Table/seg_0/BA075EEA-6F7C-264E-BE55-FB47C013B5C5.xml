@@ -1,0 +1,58 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev12c class="oracle.dbtools.crest.model.design.storage.oracle.v12c.TableProxyOraclev12c" name="BANK_USERS" directorySegmentName="seg_0" id="BA075EEA-6F7C-264E-BE55-FB47C013B5C5">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:28 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<schemaObject>977CC72C-4908-751C-940E-FC0CF8E5D2E1</schemaObject>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<segment>94567DE5-4A93-E73F-A6B5-B478DE8150DA</segment>
+<tableSpace>A639F39B-BDF8-1072-3E3A-F95AB94A2608</tableSpace>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<inMemory>NO</inMemory>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="USERNAME" id="64B9BCCD-AB75-BCD5-A814-961C36D36C87">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="PASSWORD" id="F70B3719-FE5A-EE48-166D-DFE8E65F854E">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="USER_ID" id="F9E6B3ED-B6B5-6059-6F08-9CE3E1A9CD8B">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:29 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="BANK_USERS_PK" id="96156941-BDD2-53BA-A190-2D94559CA8C0">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<schemaObject>977CC72C-4908-751C-940E-FC0CF8E5D2E1</schemaObject>
+<segment>1587B0BF-0E5F-E116-76AB-C6D62E722561</segment>
+<tableSpace>A639F39B-BDF8-1072-3E3A-F95AB94A2608</tableSpace>
+<indexSegment>1587B0BF-0E5F-E116-76AB-C6D62E722561</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</PrimaryKey>
+</primaryKeys>
+<uniqueKeys>
+<UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="BANK_USERS_USERNAME_UN" id="72695D66-ACC7-8042-0911-509F5FA38620">
+<createdBy>Zach</createdBy>
+<createdTime>2019-01-09 13:32:30 UTC</createdTime>
+<ownerDesignName>JDBCbank_ERD</ownerDesignName>
+<schemaObject>977CC72C-4908-751C-940E-FC0CF8E5D2E1</schemaObject>
+<segment>1587B0BF-0E5F-E116-76AB-C6D62E722561</segment>
+<tableSpace>A639F39B-BDF8-1072-3E3A-F95AB94A2608</tableSpace>
+<indexSegment>1587B0BF-0E5F-E116-76AB-C6D62E722561</indexSegment>
+<indexSort>SORTED</indexSort>
+<usingIndex>BY INDEX NAME</usingIndex>
+</UniqueKey>
+</uniqueKeys>
+</TableProxyOraclev12c>
